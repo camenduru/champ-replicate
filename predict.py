@@ -302,7 +302,18 @@ class Predictor(BasePredictor):
     def predict(
         self,
         ref_image_path: Path = Input(description="Image"),
+        guidance_data: str = Input(choices=["example_data/motions/motion-01",
+                                            "example_data/motions/motion-02",
+                                            "example_data/motions/motion-03",
+                                            "example_data/motions/motion-04",
+                                            "example_data/motions/motion-05",
+                                            "example_data/motions/motion-06",
+                                            "example_data/motions/motion-07",
+                                            "example_data/motions/motion-08",
+                                            "example_data/motions/motion-09"
+                                            ], default="example_data/motions/motion-01"),
     ) -> Path:
+        cfg.data['guidance_data_folder'] = guidance_data
         ref_image_pil = Image.open(ref_image_path)
         ref_image_w, ref_image_h = ref_image_pil.size
         guidance_pil_group, video_length = combine_guidance_data(self.cfg)
