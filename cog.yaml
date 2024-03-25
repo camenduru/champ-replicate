@@ -1,0 +1,30 @@
+build:
+  gpu: false
+  python_version: "3.10"
+  run:
+    - apt update -y && apt install -y software-properties-common python3-launchpadlib && apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y
+    - apt install -y gcc g++ aria2 git git-lfs wget libgl1 libglib2.0-0 ffmpeg cmake libgtk2.0-0 libopenmpi-dev unzip
+    - wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda_12.1.0_530.30.02_linux.run && sh cuda_12.1.0_530.30.02_linux.run --silent --toolkit
+    - pip install torch==2.1.0+cu121 torchvision==0.16.0+cu121 torchaudio==2.1.0+cu121 torchtext==0.16.0 torchdata==0.7.0 --extra-index-url https://download.pytorch.org/whl/cu121 -U
+    - pip install notebook pyngrok pickleshare ipywidgets einops==0.4.1 imageio==2.33.0 imageio[ffmpeg] numpy==1.23.5 omegaconf==2.2.3 Pillow==9.5.0 tqdm==4.66.1
+    - pip install https://download.pytorch.org/whl/cu121/xformers-0.0.22.post7-cp310-cp310-manylinux2014_x86_64.whl diffusers==0.24.0 accelerate==0.21.0 transformers==4.30.2
+    - GIT_LFS_SKIP_SMUDGE=1 git clone -b dev https://github.com/camenduru/champ /content/champ
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/denoising_unet.pth -d /content/champ/pretrained_models/champ -o denoising_unet.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/guidance_encoder_depth.pth -d /content/champ/pretrained_models/champ -o guidance_encoder_depth.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/guidance_encoder_dwpose.pth -d /content/champ/pretrained_models/champ -o guidance_encoder_dwpose.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/guidance_encoder_normal.pth -d /content/champ/pretrained_models/champ -o guidance_encoder_normal.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/guidance_encoder_semantic_map.pth -d /content/champ/pretrained_models/champ -o guidance_encoder_semantic_map.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/motion_module.pth -d /content/champ/pretrained_models/champ -o motion_module.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/champ/reference_unet.pth -d /content/champ/pretrained_models/champ -o reference_unet.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/image_encoder/config.json -d /content/champ/pretrained_models/image_encoder -o config.json
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/image_encoder/pytorch_model.bin -d /content/champ/pretrained_models/image_encoder -o pytorch_model.bin
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/sd-vae-ft-mse/config.json -d /content/champ/pretrained_models/sd-vae-ft-mse -o config.json
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/sd-vae-ft-mse/diffusion_pytorch_model.bin -d /content/champ/pretrained_models/sd-vae-ft-mse -o diffusion_pytorch_model.bin
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/stable-diffusion-v1-5/feature_extractor/preprocessor_config.json -d /content/champ/pretrained_models/stable-diffusion-v1-5/feature_extractor -o preprocessor_config.json
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/stable-diffusion-v1-5/model_index.json -d /content/champ/pretrained_models/stable-diffusion-v1-5 -o model_index.json
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/stable-diffusion-v1-5/unet/config.json -d /content/champ/pretrained_models/stable-diffusion-v1-5/unet -o config.json
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/stable-diffusion-v1-5/unet/diffusion_pytorch_model.bin -d /content/champ/pretrained_models/stable-diffusion-v1-5/unet -o diffusion_pytorch_model.bin
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/stable-diffusion-v1-5/v1-inference.yaml -d /content/champ/pretrained_models/stable-diffusion-v1-5 -o v1-inference.yaml
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M  https://huggingface.co/camenduru/champ/resolve/main/example_data.zip -d /content/champ -o example_data.zip
+    - cd /content/champ && unzip example_data.zip
+predict: "/src/predict.py:Predictor"
