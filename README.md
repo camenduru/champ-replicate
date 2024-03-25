@@ -15,7 +15,8 @@ https://arxiv.org/abs/2403.14781
 https://fudan-generative-vision.github.io/champ/#/
 
 ### 🖼 Output
-![image](https://github.com/camenduru/champ-replicate/assets/54370274/33be5897-bb56-45b7-8760-8d4cefeba65f)
+
+https://github.com/camenduru/champ-replicate/assets/54370274/94c8c6eb-bacd-448d-9e5c-73395bacbac5
 
 ### 🏢 Sponsor
 https://replicate.com
