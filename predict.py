@@ -313,7 +313,7 @@ class Predictor(BasePredictor):
                                             "example_data/motions/motion-09"
                                             ], default="example_data/motions/motion-01"),
     ) -> Path:
-        cfg.data['guidance_data_folder'] = guidance_data
+        self.cfg.data['guidance_data_folder'] = guidance_data
         ref_image_pil = Image.open(ref_image_path)
         ref_image_w, ref_image_h = ref_image_pil.size
         guidance_pil_group, video_length = combine_guidance_data(self.cfg)
