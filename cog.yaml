@@ -26,5 +26,5 @@ build:
     - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/resolve/main/stable-diffusion-v1-5/unet/diffusion_pytorch_model.bin -d /content/champ/pretrained_models/stable-diffusion-v1-5/unet -o diffusion_pytorch_model.bin
     - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/champ/raw/main/stable-diffusion-v1-5/v1-inference.yaml -d /content/champ/pretrained_models/stable-diffusion-v1-5 -o v1-inference.yaml
     - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M  https://huggingface.co/camenduru/champ/resolve/main/example_data.zip -d /content/champ -o example_data.zip
-    - cd /content/champ && unzip example_data.zip
+    - cd /content/champ && unzip example_data.zip && rm -rf /content/champ/example_data/motions/motion-09/normal/output.mp4 /content/champ/example_data/motions/motion-08/normal/output.mp4 /content/champ/example_data/motions/motion-07/normal/outpuo.mp4
 predict: "/src/predict.py:Predictor"
